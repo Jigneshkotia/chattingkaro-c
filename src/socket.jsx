@@ -6,7 +6,7 @@ const SocketContext = createContext();
 const GetSocket = ()=> useContext(SocketContext)
 
 const SocketProvider = ({ children }) => {
-  const socket = useMemo(()=>io("https://www.chattingkaro.live", { withCredentials: true }),[])
+  const socket = useMemo(()=>io("https://chattingkaro-s.onrender.com", { withCredentials: true }),[])
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
