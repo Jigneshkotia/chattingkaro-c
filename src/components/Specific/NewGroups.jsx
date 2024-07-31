@@ -65,7 +65,7 @@ const NewGroups = () => {
           xs: "1rem",
           sm: "2rem",
         }}
-        width={"22rem"}
+        width={"20rem"}
         spacing={"2rem"}
       >
         <DialogTitle textAlign={"center"} variant="h4">
