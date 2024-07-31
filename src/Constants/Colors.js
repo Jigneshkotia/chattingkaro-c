@@ -1,0 +1,7 @@
+export const Orange = "#ea7070"
+export const myBlue = "#103783"
+export const grayColor = "rgba(210,210,210,0.8)"
+export const BlueLight = "#2694ab"
+export const matBlack = "#1c1c1c"
+export const purple = "rgba(75,12,192,1)"
+export const lightpurple = "rgba(75,12,192,0.2)"
