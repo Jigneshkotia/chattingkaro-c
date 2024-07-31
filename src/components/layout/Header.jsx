@@ -74,7 +74,12 @@ const Header = () => {
 
   return (
     <>
-      <Box sx={{width:"99vw"}}>
+      <Box sx={{
+          width: {
+            xs: "96vw", 
+            md: "99vw", 
+          },
+        }}>
         <AppBar
           position="static"
           sx={{ 
