@@ -19,7 +19,7 @@ const Home = () => {
     >
       <Typography
         p={"2rem"}
-        variant="h3"
+        variant="h5"
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
