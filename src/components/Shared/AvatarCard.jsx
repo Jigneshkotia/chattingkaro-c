@@ -11,10 +11,10 @@ const AvatarCard = ({avatar= [], max = 4}) => {
             <Box width={"5rem"} height={"3rem"}>
                 {avatar.map((i, index)=>(
                     <Avatar
-                    key={Math.random()*100}
+                    key={`${i}-${index}`}
                     src={transformImage(i)}
                     alt={`avatar ${index}`}
-                    style={{
+                    sx={{
                         width: "3rem",
                         height: "3rem",
                         position: "absolute",
@@ -22,7 +22,8 @@ const AvatarCard = ({avatar= [], max = 4}) => {
                             xs: `${0.5 + index}rem`,
                             sm: `${index}rem`
                         },
-                        border : "1px"
+                        border : "2px solid #ffffff",
+                        boxShadow: "0 2px 6px rgba(22,27,51,0.15)",
                     }}
                 />
                 ))}

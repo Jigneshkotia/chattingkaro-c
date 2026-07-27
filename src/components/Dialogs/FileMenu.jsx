@@ -57,16 +57,23 @@ const FileMenu = ({ anchorE1 , chatId}) => {
   }
 
   return (
-    <Menu anchorEl={anchorE1} open={isFileMenu} onClose={closeFileMenu}>
+    <Menu
+      anchorEl={anchorE1}
+      open={isFileMenu}
+      onClose={closeFileMenu}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      transformOrigin={{ vertical: "bottom", horizontal: "left" }}
+      PaperProps={{ sx: { borderRadius: "14px", minWidth: "11rem" } }}
+    >
       <div
         style={{
-          width: "10rem",
+          width: "100%",
         }}
       >
         <MenuList>
-          <MenuItem onClick={selectImage} >
+          <MenuItem onClick={selectImage} sx={{ py: 1, borderRadius: "8px", mx: 0.5 }}>
             <Tooltip title="Image">
-              <ImageIcon />
+              <ImageIcon color="primary" fontSize="small" />
             </Tooltip>
             <ListItemText style={{ marginLeft: "1.5rem" }}>Image</ListItemText>
             <input
@@ -80,9 +87,9 @@ const FileMenu = ({ anchorE1 , chatId}) => {
           </MenuItem>
 
            
-          <MenuItem onClick={selectAudio} >
+          <MenuItem onClick={selectAudio} sx={{ py: 1, borderRadius: "8px", mx: 0.5 }}>
             <Tooltip title="Audio">
-              <AudioFileIcon />
+              <AudioFileIcon color="primary" fontSize="small" />
             </Tooltip>
             <ListItemText style={{ marginLeft: "1.5rem" }}>Audio</ListItemText>
             <input
@@ -95,9 +102,9 @@ const FileMenu = ({ anchorE1 , chatId}) => {
             />
           </MenuItem>
 
-          <MenuItem onClick={selectVideo} >
+          <MenuItem onClick={selectVideo} sx={{ py: 1, borderRadius: "8px", mx: 0.5 }}>
             <Tooltip title="Video">
-              <VideoFileIcon />
+              <VideoFileIcon color="primary" fontSize="small" />
             </Tooltip>
             <ListItemText style={{ marginLeft: "1.5rem" }}>Video</ListItemText>
             <input
@@ -110,9 +117,9 @@ const FileMenu = ({ anchorE1 , chatId}) => {
             />
           </MenuItem>
 
-          <MenuItem onClick={selectFile} >
+          <MenuItem onClick={selectFile} sx={{ py: 1, borderRadius: "8px", mx: 0.5 }}>
             <Tooltip title="File">
-              <UploadFileIcon />
+              <UploadFileIcon color="primary" fontSize="small" />
             </Tooltip>
             <ListItemText style={{ marginLeft: "1.5rem" }}>File</ListItemText>
             <input

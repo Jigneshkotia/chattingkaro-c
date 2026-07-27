@@ -33,20 +33,29 @@ const Dashboard = () => {
 
   const AppBar = (
     <Paper
-      elevation={3}
+      elevation={0}
       sx={{
-        padding: "2rem",
-        margin: "2rem 0rem",
-        borderRadius: "1rem",
+        padding: { xs: "1.25rem", sm: "1.5rem 2rem" },
+        margin: "1.5rem 0rem",
+        borderRadius: "1.25rem",
+        boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
       }}
     >
       <Stack direction={"row"} alignItems={"center"} spacing={"1rem"}>
-        <AdminPanelSettingsIcon sx={{ fontSize: "3rem" }} />
-        <SearchField placeholder="Search..." />
-        <CurveButton>Search</CurveButton>
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          sx={{ width: 48, height: 48, borderRadius: "12px", bgcolor: "primary.main", color: "white", flexShrink: 0 }}
+        >
+          <AdminPanelSettingsIcon />
+        </Stack>
+        <SearchField placeholder="Search..." sx={{ display: { xs: "none", sm: "block" } }} />
+        <CurveButton sx={{ display: { xs: "none", sm: "block" } }}>Search</CurveButton>
         <Box flexGrow={1} />
-        <Typography >{moment().format("dddd, D MMMM YYYY")}</Typography>
-        <NotificationsIcon />
+        <Typography color="text.secondary" sx={{ display: { xs: "none", md: "block" } }}>
+          {moment().format("dddd, D MMMM YYYY")}
+        </Typography>
+        <NotificationsIcon color="action" />
       </Stack>
     </Paper>
   );
@@ -54,14 +63,14 @@ const Dashboard = () => {
   const Widgets = (
     <Stack
       direction={{ xs: "column", sm: "row" }}
-      spacing={"2rem"}
+      spacing={"1.5rem"}
       justifyContent={"space-between"}
-      alignItems={"center"}
-      margin={"2rem 0"}
+      alignItems={"stretch"}
+      margin={"1.5rem 0"}
     >
-      <Widget title={"users"} value={stats?.usersCount} icon={<PersonIcon />} />
-      <Widget title={"chats"} value={stats?.totalChatsCount} icon={<GroupIcon />} />
-      <Widget title={"messages"} value={stats?.messagesCount} icon={<MessageIcon />} />
+      <Widget title={"Users"} value={stats?.usersCount} icon={<PersonIcon />} color="#3752D9" />
+      <Widget title={"Chats"} value={stats?.totalChatsCount} icon={<GroupIcon />} color="#FF6F59" />
+      <Widget title={"Messages"} value={stats?.messagesCount} icon={<MessageIcon />} color="#2FA972" />
     </Stack>
   );
 
@@ -86,31 +95,32 @@ const Dashboard = () => {
           }}
         >
           <Paper
-            elevation={3}
+            elevation={0}
             sx={{
-              padding: " 2rem 3.5rem",
-              borderRadius: "1rem",
+              padding: { xs: "1.5rem", sm: "2rem 2.5rem" },
+              borderRadius: "1.25rem",
               width: "100%",
               maxWidth: "45rem",
+              boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
             }}
           >
-            <Typography margin={"2rem 0"} variant="h4">
+            <Typography margin={"0 0 1.5rem"} variant="h6" fontWeight={700}>
               Last Messages
             </Typography>
             <LineChart value={stats?.messagesChart || {}} />
           </Paper>
           <Paper
-            elevation={3}
+            elevation={0}
             sx={{
-              padding: "1rem",
-              borderRadius: "1rem",
+              padding: "1.5rem",
+              borderRadius: "1.25rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: { xs: "100%", sm: "50%" },
               position: "relative",
               width: "100%",
               maxWidth: "25rem",
+              boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
             }}
           >
             <DoughnutChart
@@ -139,34 +149,39 @@ const Dashboard = () => {
   );
 };
 
-const Widget = ({ title, value, icon }) => (
+const Widget = ({ title, value, icon, color = "#3752D9" }) => (
   <Paper
-    elevation={3}
+    elevation={0}
     sx={{
-      padding: "2rem",
-      margin: "2rem 0",
-      borderRadius: "1.5rem",
-      width: "20rem",
+      padding: "1.5rem",
+      borderRadius: "1.25rem",
+      width: "100%",
+      boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
+      flex: 1,
     }}
   >
-    <Stack alignItems={"center"} spacing={"1rem"}>
-      <Typography
+    <Stack direction="row" alignItems={"center"} spacing={"1.25rem"}>
+      <Stack
+        alignItems="center"
+        justifyContent="center"
         sx={{
-          color: "rgba(0,0,0,0.7)",
-          borderRadius: "50%",
-          border: `5px solid rgba(0,0,0,0.9)`,
-          width: "5rem",
-          height: "5rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          width: "3.5rem",
+          height: "3.5rem",
+          borderRadius: "14px",
+          bgcolor: `${color}1A`,
+          color: color,
+          flexShrink: 0,
         }}
       >
-        {value}
-      </Typography>
-      <Stack direction={"row"} alignItems={"center"} spacing={"1rem"}>
         {icon}
-        <Typography>{title}</Typography>
+      </Stack>
+      <Stack>
+        <Typography variant="h4" fontWeight={700}>
+          {value ?? 0}
+        </Typography>
+        <Typography color="text.secondary" variant="body2">
+          {title}
+        </Typography>
       </Stack>
     </Stack>
   </Paper>

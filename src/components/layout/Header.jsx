@@ -4,19 +4,20 @@ import {
   Badge,
   Box,
   IconButton,
+  Stack,
   Toolbar,
   Tooltip,
   Typography,
 } from "@mui/material";
 import React, { Suspense, lazy, useState } from "react";
-import { Orange, myBlue } from "../../Constants/Colors";
+import { myBlue } from "../../Constants/Colors";
 import {
   Add as AddIcon,
+  ChatBubble as ChatBubbleIcon,
   Group as GroupIcon,
   Logout as LogoutIcon,
   Menu as MenuIcon,
   Notifications,
-  NotificationsActive,
   Search as SreachIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -74,46 +75,47 @@ const Header = () => {
 
   return (
     <>
-      <Box sx={{
-          width: {
-            xs: "96vw", 
-            md: "99vw", 
-          },
-        }}>
+      <Box
+        sx={{
+          width: "100%",
+          position: "sticky",
+          top: 0,
+          zIndex: (t) => t.zIndex.appBar,
+          px: { xs: 0.75, sm: 1 },
+          pt: { xs: 0.75, sm: 1 },
+        }}
+      >
         <AppBar
           position="static"
-          sx={{ 
-            border: "0.1px solid #000328",
-            borderRadius: "20px",
-            margin:"0.5rem",
+          elevation={0}
+          sx={{
+            borderRadius: "18px",
             bgcolor: myBlue,
-            // boxShadow: "0 0 20px rgba(255, 255, 255, 0.7)",
+            backgroundImage: `linear-gradient(135deg, ${myBlue} 0%, #2A3FAD 100%)`,
+            boxShadow: "0 8px 24px rgba(55,82,217,0.28)",
           }}
         >
-          <Toolbar>
-            <Typography
-              variant="h6"
-              sx={{
-                display: { xs: "none", sm: "block" },
-              }}
-            >
-              Chatting Karo
-            </Typography>
+          <Toolbar sx={{ py: { xs: 0.5, sm: 0.75 }, gap: 0.5 }}>
             <Box
               sx={{
-                display: { xs: "block", sm: "none" },
+                display: { xs: "flex", sm: "none" },
               }}
             >
               <IconButton color="inherit" onClick={HandleMobile}>
                 <MenuIcon />
               </IconButton>
             </Box>
-            <Box
-              sx={{
-                flexGrow: 1,
-              }}
-            />
-            <Box>
+
+            <Stack direction="row" alignItems="center" spacing={1.25} sx={{ display: { xs: "none", sm: "flex" } }}>
+              <ChatBubbleIcon />
+              <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: 0.2 }}>
+                Chatting Karo
+              </Typography>
+            </Stack>
+
+            <Box sx={{ flexGrow: 1 }} />
+
+            <Stack direction="row" spacing={{ xs: 0, sm: 0.5 }}>
               <Tooltip title="Search">
                 <IconButton color="inherit" size="large" onClick={openSearch}>
                   <SreachIcon />
@@ -133,6 +135,12 @@ const Header = () => {
                   <GroupIcon />
                 </IconButton>
               </Tooltip>
+              <IconBtn
+                title={"Notifications"}
+                icon={<Notifications />}
+                onClick={OpenNotifications}
+                value={notificationCount}
+              />
               <Tooltip title="Logout">
                 <IconButton
                   color="inherit"
@@ -142,13 +150,7 @@ const Header = () => {
                   <LogoutIcon />
                 </IconButton>
               </Tooltip>
-              <IconBtn
-                title={"Notifications"}
-                icon={<Notifications />}
-                onClick={OpenNotifications}
-                value={notificationCount}
-              />
-            </Box>
+            </Stack>
           </Toolbar>
         </AppBar>
       </Box>

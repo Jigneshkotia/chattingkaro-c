@@ -1,4 +1,5 @@
-import { Menu, Stack } from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
+import { Menu, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { setIsDeleteMenu } from "../../redux/reducers/misc";
@@ -12,7 +13,7 @@ const DeleteChatMenu = ({ dispatch, deleteMenuAnchor }) => {
     <Menu
       open={isDeleteMenu}
       onClose={closeHandler}
-      anchorEl={deleteMenuAnchor.current} 
+      anchorEl={deleteMenuAnchor.current}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "right"
@@ -21,18 +22,26 @@ const DeleteChatMenu = ({ dispatch, deleteMenuAnchor }) => {
         vertical: "center",
         horizontal: "center"
       }}
+      PaperProps={{ sx: { borderRadius: "12px" } }}
     >
       <Stack
         sx={{
           width: "10rem",
-          padding: "0.5rem",
+          padding: "0.6rem 0.9rem",
           cursor: "pointer",
+          borderRadius: "8px",
+          color: "error.main",
+          "&:hover": { bgcolor: "rgba(229,72,77,0.08)" },
         }}
         direction={"row"}
         alignItems={"center"}
-        spacing={"0.5rem"}
+        spacing={"0.75rem"}
+        onClick={closeHandler}
       >
-        shie
+        <DeleteIcon fontSize="small" />
+        <Typography variant="body2" fontWeight={600}>
+          Delete Chat
+        </Typography>
       </Stack>
     </Menu>
   );

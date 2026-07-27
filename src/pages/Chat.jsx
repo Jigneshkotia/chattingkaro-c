@@ -171,22 +171,20 @@ const Chat = ({ chatId, user }) => {
   const allMessages = [...oldMessages, ...messages];
 
   return chatDetails.isLoading ? (
-    <Skeleton />
+    <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: "18px" }} />
   ) : (
     <>
       <Stack
         ref={containerRef}
         boxSizing={"border-box"}
-        padding={"1rem"}
-        spacing={"1rem"}
-        height={"90%"}
+        padding={{ xs: "0.75rem", sm: "1.25rem" }}
+        spacing={"0.75rem"}
+        flexGrow={1}
+        minHeight={0}
         sx={{
           overflowX: "hidden",
           overflowY: "auto",
-          border:"2px",
-          borderRadius : "10px",
-          marginRight : "5px",
-          background : "linear-gradient(135deg, #9bafd951, #9bafd924)"
+          bgcolor: "#F5F7FB",
         }}
       >
         {allMessages.map((i) => (
@@ -197,35 +195,20 @@ const Chat = ({ chatId, user }) => {
         <div ref={bottomRef} />
       </Stack>
 
-      <form
-        style={{
-          height: " 10% ",
-        }}
-        onSubmit={submitHandler}
-      >
+      <form onSubmit={submitHandler}>
         <Stack
           direction={"row"}
-          height={"100%"}
-          padding={"1rem"}
+          padding={{ xs: "0.6rem", sm: "0.9rem 1.25rem" }}
           alignItems={"center"}
-          position={"relative"}
+          spacing={"0.5rem"}
+          sx={{ bgcolor: "background.paper", borderTop: "1px solid", borderColor: "divider" }}
         >
-          <IconButton
-            sx={{
-              position: "absolute",
-              left: "1.5rem",
-              rotate: "20deg",
-            }}
-            onClick={handleFileOpen}
-          >
+          <IconButton onClick={handleFileOpen} sx={{ color: "text.secondary", rotate: "20deg" }}>
             <AttachFileIcon />
           </IconButton>
 
           <InputBox
-            sx={{
-              backgroundColor : "grayColor"
-            }}
-            placeholder="Type Message Here..."
+            placeholder="Type a message..."
             value={message}
             onChange={messageOnChange}
           />
@@ -233,17 +216,15 @@ const Chat = ({ chatId, user }) => {
           <IconButton
             type="submit"
             sx={{
-              rotate: "-30deg",
-              backgroundColor: "rgba(75,12,192,0.4)",
+              backgroundColor: "primary.main",
               color: "white",
-              marginLeft: "1rem",
-              padding: "0.5rem",
+              padding: "0.6rem",
               "&:hover": {
-                bgcolor: "rgba(75,12,192,0.8)",
+                bgcolor: "primary.dark",
               },
             }}
           >
-            <SendIcon />
+            <SendIcon fontSize="small" />
           </IconButton>
         </Stack>
       </form>

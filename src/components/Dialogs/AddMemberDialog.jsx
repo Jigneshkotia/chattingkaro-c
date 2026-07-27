@@ -39,10 +39,12 @@ const AddMemberDialog = ({ chatId }) => {
   useErrors([{ isError, error }]);
 
   return (
-    <Dialog open={isAddMember} onClose={closeHandler}>
-      <Stack p={"2rem"} width={"10rem"} spacing={"2rem"}>
-        <DialogTitle textAlign={"center"}>Add Member</DialogTitle>
-        <Stack spacing={"1rem"}>
+    <Dialog open={isAddMember} onClose={closeHandler} fullWidth maxWidth="xs">
+      <Stack p={{ xs: "1.25rem", sm: "1.75rem" }} spacing={"1.5rem"}>
+        <DialogTitle sx={{ textAlign: "center", p: 0, fontWeight: 700 }}>
+          Add Member
+        </DialogTitle>
+        <Stack spacing={"0.5rem"} sx={{ maxHeight: "16rem", overflow: "auto" }}>
           {isLoading ? (
             <Skeleton />
           ) : data?.availableFriends?.length > 0 ? (
@@ -55,23 +57,25 @@ const AddMemberDialog = ({ chatId }) => {
               />
             ))
           ) : (
-            <Typography textAlign={"center"}> No Friends </Typography>
+            <Typography textAlign={"center"} color="text.secondary" py={1}> No friends to add </Typography>
           )}
         </Stack>
         <Stack
           direction={"row"}
+          spacing={1.5}
           alignItems={"center"}
           justifyContent={"space-evenly"}
         >
-          <Button color="error" onClick={closeHandler}>
+          <Button fullWidth variant="outlined" color="error" onClick={closeHandler}>
             Cancel
           </Button>
           <Button
+            fullWidth
             onClick={addMemberSubmitHandler}
             variant="contained"
             disabled={isLoadingAddMembers}
           >
-            Submit Changes
+            Submit
           </Button>
         </Stack>
       </Stack>

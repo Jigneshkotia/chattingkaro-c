@@ -13,23 +13,27 @@ const MessageComponent = ({message, user}) => {
     const timeAgo = moment(createdAt).fromNow()
   return (
     <motion.div
-        initial={{ opacity:0, x:"-100%"}}
-        whileInView={{opacity:1, x: 0}}
+        initial={{ opacity:0, y: 8 }}
+        whileInView={{opacity:1, y: 0}}
+        viewport={{ once: true }}
+        transition={{ duration: 0.2 }}
 
         style={{
             alignSelf:sameSender?"flex-end":"flex-start",
-            backgroundColor: "white",
-            color: "black",
-            borderRadius: "15px",
-            padding:"0.5rem",
-            width:"fit-content"
+            backgroundColor: sameSender ? "#3752D9" : "#ffffff",
+            color: sameSender ? "#ffffff" : "#161B33",
+            borderRadius: sameSender ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+            padding:"0.6rem 0.9rem",
+            maxWidth: "min(30rem, 75%)",
+            boxShadow: "0 1px 4px rgba(22,27,51,0.08)",
+            wordBreak: "break-word",
         }}
     >
         {
-            !sameSender && <Typography variant='caption' color={BlueLight} fontWeight={"600"}>{sender.name}</Typography>
+            !sameSender && <Typography variant='caption' color={BlueLight} fontWeight={"700"}>{sender.name}</Typography>
         }
         {
-            content && <Typography>{content}</Typography>
+            content && <Typography variant="body2">{content}</Typography>
         }
 
         {
@@ -39,7 +43,7 @@ const MessageComponent = ({message, user}) => {
                     const file = fileFormat(url)
                     return <Box key={index} >
                         <a href={url} target='_blank' download style={{
-                            color: "black"
+                            color: "inherit"
                         }}>
                             {RenderAttachment(file,url)}
                         </a>
@@ -48,7 +52,17 @@ const MessageComponent = ({message, user}) => {
             )
         }
 
-        <Typography variant='caption' color={"text.Secondary"}>{timeAgo}</Typography>
+        <Typography
+          variant='caption'
+          sx={{
+            display: "block",
+            textAlign: "right",
+            mt: 0.25,
+            color: sameSender ? "rgba(255,255,255,0.7)" : "text.secondary",
+          }}
+        >
+          {timeAgo}
+        </Typography>
     </motion.div>
   )
 }

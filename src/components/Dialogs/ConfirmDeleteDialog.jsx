@@ -3,16 +3,16 @@ import React from 'react'
 
 const ConfirmDeleteDialog = ({open, handleClose, deleteHandler}) => {
   return (
-    <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+    <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: 700 }}>Delete Group</DialogTitle>
         <DialogContent>
             <DialogContentText>
-                Are You Sure You Want To Delete This Group ?
+                Are you sure you want to delete this group? This action cannot be undone.
             </DialogContentText>
         </DialogContent>
-        <DialogActions>
-            <Button onClick={handleClose}>NO</Button>
-            <Button onClick={deleteHandler} color='error'>Yes</Button>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+            <Button onClick={deleteHandler} color='error' variant="contained">Delete</Button>
         </DialogActions>
     </Dialog>
   )

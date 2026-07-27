@@ -3,46 +3,61 @@ import {
   Face as FaceIcon,
   AlternateEmail as UsernameIcon,
 } from "@mui/icons-material";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Divider, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import React from "react";
 
 const Profile = ({ user }) => {
   return (
     <Stack
-      spacing={"2rem"}
+      spacing={"1.5rem"}
       direction={"column"}
       alignItems={"center"}
       justifyContent={"center"}
-      sx={{ width: "100%", height: "100%" }}
+      sx={{ width: "100%", height: "100%", px: 1 }}
     >
       <Avatar
         src={user?.avatar?.url}
         sx={{
-          width: 200,
-          height: 200,
+          width: { xs: 120, md: 160 },
+          height: { xs: 120, md: 160 },
           objectFit: "contain",
-          marginBottom: "1rem",
-          border: "3px solid white",
-          boxShadow: "0 0 20px rgba(255, 255, 255, 0.7)",
-          transition: "box-shadow 0.3s ease-in-out",
-          "&:hover": {
-            boxShadow: "0 0 50px rgba(0, 255, 255, 0.9)",
-          },
+          border: "4px solid rgba(255,255,255,0.85)",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
         }}
       />
-      <ProfileCard heading={"bio"} text={user?.bio} />
-      <ProfileCard
-        heading={"Username"}
-        text={user?.username}
-        Icon={<UsernameIcon />}
-      />
-      <ProfileCard heading={"Name"} text={user?.name} Icon={<FaceIcon />} />
-      <ProfileCard
-        heading={"Joined"}
-        text={moment(user?.createdAt).fromNow()}
-        Icon={<CalanderIcon />}
-      />
+
+      <Stack alignItems="center" spacing={0.25}>
+        <Typography variant="h6" color="white" fontWeight={700}>
+          {user?.name}
+        </Typography>
+        {user?.bio && (
+          <Typography
+            variant="body2"
+            color="rgba(255,255,255,0.75)"
+            textAlign="center"
+            sx={{ maxWidth: "16rem" }}
+          >
+            {user.bio}
+          </Typography>
+        )}
+      </Stack>
+
+      <Divider flexItem sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
+
+      <Stack spacing={"1.25rem"} width="100%">
+        <ProfileCard
+          heading={"Username"}
+          text={user?.username}
+          Icon={<UsernameIcon />}
+        />
+        <ProfileCard heading={"Name"} text={user?.name} Icon={<FaceIcon />} />
+        <ProfileCard
+          heading={"Joined"}
+          text={moment(user?.createdAt).fromNow()}
+          Icon={<CalanderIcon />}
+        />
+      </Stack>
     </Stack>
   );
 };
@@ -53,12 +68,30 @@ const ProfileCard = ({ text, Icon, heading }) => (
     alignItems={"center"}
     spacing={"1rem"}
     color={"white"}
-    textAlign={"center"}
   >
-    {Icon && Icon}
-    <Stack>
-      <Typography variant="body1">{text}</Typography>
-      <Typography color={"gray"} variant="caption">
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        width: 40,
+        height: 40,
+        borderRadius: "12px",
+        bgcolor: "rgba(255,255,255,0.12)",
+        flexShrink: 0,
+      }}
+    >
+      {Icon}
+    </Stack>
+    <Stack sx={{ minWidth: 0 }}>
+      <Typography
+        variant="body1"
+        fontWeight={600}
+        noWrap
+        title={text}
+      >
+        {text}
+      </Typography>
+      <Typography color={"rgba(255,255,255,0.6)"} variant="caption">
         {heading}
       </Typography>
     </Stack>

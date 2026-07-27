@@ -22,7 +22,7 @@ import {
 import React, { Suspense, lazy, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { matBlack, myBlue } from "../Constants/Colors";
+import { myBlue } from "../Constants/Colors";
 import AvatarCard from "../components/Shared/AvatarCard";
 import UserItem from "../components/Shared/UserItem";
 import { LayoutLoaders } from "../components/layout/Loaders";
@@ -167,16 +167,17 @@ const Groups = () => {
     <>
       <Box
         sx={{
-          display: {
-            xs: "block",
-            sm: "none",
-            position: "fixed",
-            right: "1rem",
-            top: "1rem",
-          },
+          display: { xs: "block", sm: "none" },
+          position: "fixed",
+          right: "1rem",
+          top: "1rem",
+          zIndex: 1300,
         }}
       >
-        <IconButton onClick={handleMobile}>
+        <IconButton
+          onClick={handleMobile}
+          sx={{ bgcolor: "background.paper", boxShadow: "0 2px 10px rgba(22,27,51,0.12)" }}
+        >
           <MenuIcon />
         </IconButton>
       </Box>
@@ -184,12 +185,12 @@ const Groups = () => {
         <IconButton
           sx={{
             position: "absolute",
-            top: "2rem",
-            left: "2rem",
-            bgcolor: matBlack,
+            top: { xs: "1rem", sm: "1.5rem" },
+            left: { xs: "1rem", sm: "1.5rem" },
+            bgcolor: myBlue,
             color: "white",
             ":hover": {
-              bgcolor: "rgba(0,0,0,0.7)",
+              bgcolor: "primary.dark",
             },
           }}
           onClick={navigateBack}
@@ -206,7 +207,7 @@ const Groups = () => {
       alignItems={"center"}
       justifyContent={"center"}
       spacing={"1rem"}
-      padding={"3rem"}
+      padding={{ xs: "1rem", sm: "2rem" }}
     >
       {isEdit ? (
         <>
@@ -220,7 +221,7 @@ const Groups = () => {
         </>
       ) : (
         <>
-          <Typography variant="h4">{groupName}</Typography>
+          <Typography variant="h4" fontWeight={700} noWrap>{groupName}</Typography>
           <IconButton
             disabled={isLoadingGroupName}
             onClick={() => setIsEdit(true)}
@@ -236,7 +237,9 @@ const Groups = () => {
     <Stack
       direction={{ sm: "row", xs: "column-reverse" }}
       spacing={"1rem"}
-      p={{ sm: "1rem", xs: "0", md: "1rem 4rem" }}
+      width={{ xs: "100%", sm: "auto" }}
+      maxWidth={"25rem"}
+      p={{ sm: "1rem", xs: "1rem 0 0", md: "1rem 4rem" }}
     >
       <Button
         size="large"
@@ -261,18 +264,19 @@ const Groups = () => {
   return myGroups.isLoading ? (
     <LayoutLoaders />
   ) : (
-    <Grid container height={"100vh"}  >
+    <Grid container height={"100vh"} sx={{ bgcolor: "background.default" }} >
       <Grid
         item
         sx={{
           display: {
             xs: "none",
             sm: "block",
-
           },
+          bgcolor: "background.paper",
+          borderRight: "1px solid",
+          borderColor: "divider",
         }}
         sm={4}
-        bgcolor={"rgba(155, 175, 217, 0.5)"}
       >
         <GroupsList mygroups={myGroups?.data?.groups} chatId={chatId} />
       </Grid>
@@ -285,7 +289,7 @@ const Groups = () => {
           alignItems: "center",
           flexDirection: "column",
           position: "relative",
-          padding: "1rem 3rem",
+          padding: { xs: "4rem 1.25rem 1.5rem", sm: "1.5rem 3rem" },
         }}
       >
         {iconBtns}
@@ -294,11 +298,12 @@ const Groups = () => {
           <>
             {GroupName}
             <Typography
-              margin={"2rem"}
-              alignSelf={"flex-mid"}
-              variant="body1"
+              margin={"1rem"}
+              variant="overline"
+              fontWeight={700}
+              color="text.secondary"
             >
-              MEMBERS
+              Members
             </Typography>
 
             <Stack
@@ -306,7 +311,7 @@ const Groups = () => {
               width={"100%"}
               boxSizing={"border-box"}
               padding={{ sm: "1rem", xs: "0", md: "1rem 0rem" }}
-              spacing={"2rem"}
+              spacing={"1rem"}
               height={"50vh"}
               overflow={"auto"}
             >
@@ -315,9 +320,10 @@ const Groups = () => {
                   user={i}
                   isAdded
                   styling={{
-                    boxShadow: "0 0 0.5rem rgba(0,0,0,0.2)",
-                    padding: "1rem 2rem",
+                    boxShadow: "0 2px 8px rgba(22,27,51,0.06)",
+                    padding: "0.75rem 1.25rem",
                     borderRadius: "1rem",
+                    bgcolor: "background.paper",
                   }}
                   handler={removeMemberHandler}
                   key={i._id}
@@ -367,14 +373,17 @@ const Groups = () => {
 };
 
 const GroupsList = ({ w = "100%", mygroups = [], chatId }) => (
-  <Stack width={w} overflow={"auto"} height={"100vh"}>
+  <Stack width={w} overflow={"auto"} height={"100vh"} py={2}>
+    <Typography px={2} pb={1} variant="overline" fontWeight={700} color="text.secondary">
+      Your Groups
+    </Typography>
     {mygroups.length > 0 ? (
       mygroups.map((group) => (
         <GroupListItem group={group} chatId={chatId} key={group._id} />
       ))
     ) : (
-      <Typography textAlign={"center"} padding={"1rem"}>
-        No Groups
+      <Typography textAlign={"center"} color="text.secondary" padding={"1rem"}>
+        No groups yet
       </Typography>
     )}
   </Stack>
@@ -390,9 +399,18 @@ const GroupListItem = memo(({ group, chatId }) => {
         if (chatId === _id) e.preventDefault();
       }}
     >
-      <Stack direction={"row"} spacing={"1rem"} alignItems={"center"} sx={{ marginLeft : "5rem"}}>
+      <Stack
+        direction={"row"}
+        spacing={"1rem"}
+        alignItems={"center"}
+        sx={{
+          px: 2,
+          py: 1,
+          bgcolor: chatId === _id ? "rgba(55,82,217,0.08)" : "transparent",
+        }}
+      >
         <AvatarCard avatar={avatar} />
-        <Typography>{name}</Typography>
+        <Typography noWrap fontWeight={500}>{name}</Typography>
       </Stack>
     </Link>
   );

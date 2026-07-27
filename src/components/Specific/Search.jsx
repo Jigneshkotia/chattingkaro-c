@@ -6,7 +6,8 @@ import {
   InputAdornment,
   List,
   Stack,
-  TextField
+  TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,25 +51,33 @@ const Search = () => {
   }, [search.value]);
 
   return (
-    <Dialog open={isSearch} onClose={searchCloseHandler}>
-      <Stack padding={"2rem"} direction={"column"} width={"20rem"}>
-        <DialogTitle textAlign={"center"}>find people</DialogTitle>
+    <Dialog open={isSearch} onClose={searchCloseHandler} fullWidth maxWidth="xs">
+      <Stack padding={{ xs: "1.25rem", sm: "1.75rem" }} direction={"column"} spacing={1.5}>
+        <DialogTitle sx={{ textAlign: "center", p: 0, fontWeight: 700 }}>
+          Find People
+        </DialogTitle>
         <TextField
-          label=""
+          placeholder="Search by name..."
           value={search.value}
           onChange={search.changeHandler}
           variant="outlined"
           size="small"
+          fullWidth
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon fontSize="small" />
               </InputAdornment>
             ),
           }}
         />
 
-        <List>
+        <List sx={{ maxHeight: "20rem", overflow: "auto" }}>
+          {users.length === 0 && (
+            <Typography textAlign="center" color="text.secondary" variant="body2" py={2}>
+              {search.value ? "No users found" : "Start typing to search"}
+            </Typography>
+          )}
           {users.map((i) => (
             <UserItem
               user={i}

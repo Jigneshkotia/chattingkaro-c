@@ -59,28 +59,30 @@ const NewGroups = () => {
   const groupName = useInputValidation("");
 
   return (
-    <Dialog open={isNewGroup} onClose={closeHandler}>
+    <Dialog open={isNewGroup} onClose={closeHandler} fullWidth maxWidth="xs">
       <Stack
         p={{
-          xs: "1rem",
+          xs: "1.25rem",
           sm: "2rem",
         }}
-        width={"20rem"}
-        spacing={"2rem"}
+        spacing={"1.5rem"}
       >
-        <DialogTitle textAlign={"center"} variant="h4">
+        <DialogTitle sx={{ textAlign: "center", p: 0, fontWeight: 700 }} variant="h5">
           New Group
         </DialogTitle>
         <TextField
-          label="Group Name "
+          label="Group Name"
+          fullWidth
           value={groupName.value}
           onChange={groupName.changeHandler}
         />
-        <Typography variant="body1" textAlign={"center"} >MEMBERS</Typography>
-        <Stack>
+        <Typography variant="overline" color="text.secondary" fontWeight={700}>
+          Members
+        </Typography>
+        <Stack sx={{ maxHeight: "14rem", overflow: "auto" }}>
           {isLoading ? (
             <Skeleton />
-          ) : (
+          ) : data.friends?.length > 0 ? (
             data.friends?.map((i) => (
               <UserItem
                 user={i}
@@ -89,13 +91,17 @@ const NewGroups = () => {
                 isAdded={selectedMembers.includes(i._id)}
               />
             ))
+          ) : (
+            <Typography textAlign="center" color="text.secondary" py={1}>
+              No friends to add yet
+            </Typography>
           )}
         </Stack>
-        <Stack direction={"row"} justifyContent={"space-evenly"}>
-          <Button variant="outlined" color="error" size="large" onClick={closeHandler} >
+        <Stack direction={"row"} spacing={1.5} justifyContent={"space-evenly"}>
+          <Button fullWidth variant="outlined" color="error" size="large" onClick={closeHandler} >
             Cancel
           </Button>
-          <Button variant="contained" size="large" onClick={submitHandler} disabled={isLoadingNewGroup} >
+          <Button fullWidth variant="contained" size="large" onClick={submitHandler} disabled={isLoadingNewGroup} >
             Create
           </Button>
         </Stack>

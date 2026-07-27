@@ -105,9 +105,13 @@ const AppLayout = () => (WrappedComponent) => {
         {isLoading ? (
           <Skeleton />
         ) : (
-          <Drawer open={isMobile} onClose={handleMobileClose} >
+          <Drawer
+            open={isMobile}
+            onClose={handleMobileClose}
+            PaperProps={{ sx: { width: "min(80vw, 20rem)" } }}
+          >
             <ChatList
-              w="70vw"
+              w="100%"
               chats={data?.chats}
               chatId={chatId}
               HandleDeleteChat={handleDeleteChat}
@@ -117,16 +121,27 @@ const AppLayout = () => (WrappedComponent) => {
           </Drawer>
         )}
 
-        <Grid container height={"calc(100vh - 5rem)"} spacing={1} sx={{ flexGrow: 1, p: 1 }} >
+        <Grid
+          container
+          height={"calc(100vh - 5.5rem)"}
+          spacing={1.25}
+          sx={{ flexGrow: 1, p: { xs: 0.75, sm: 1.25 } }}
+        >
           <Grid
             item
             sm={4}
             md={3}
-            sx={{ display: { xs: "none", sm: "block" }, height: '100%' }}
-            height={"100%"}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              height: "100%",
+              bgcolor: "background.paper",
+              borderRadius: "18px",
+              boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
+              overflow: "hidden",
+            }}
           >
             {isLoading ? (
-              <Skeleton />
+              <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: "18px" }} />
             ) : (
               <ChatList
                 chats={data?.chats}
@@ -137,7 +152,22 @@ const AppLayout = () => (WrappedComponent) => {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={8} md={5} lg={6} height={"100%"}>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            lg={6}
+            height={"100%"}
+            sx={{
+              bgcolor: "background.paper",
+              borderRadius: "18px",
+              boxShadow: "0 2px 12px rgba(22,27,51,0.06)",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <WrappedComponent {...props} chatId={chatId} user={user} />
           </Grid>
           <Grid
@@ -148,11 +178,11 @@ const AppLayout = () => (WrappedComponent) => {
               display: { xs: "none", md: "block" },
               p: 2,
               bgcolor: myBlue,
-              border: "0.1px solid",
-              borderRadius: "20px",
+              backgroundImage: `linear-gradient(160deg, ${myBlue} 0%, #1F2F73 100%)`,
+              borderRadius: "18px",
+              boxShadow: "0 8px 24px rgba(55,82,217,0.22)",
               height: '100%',
-              alignItems: 'center', 
-              justifyContent: 'center', 
+              overflow: "auto",
             }}
             height={"100%"}
           >

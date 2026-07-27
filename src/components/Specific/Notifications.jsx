@@ -56,15 +56,17 @@ const Notifications = () => {
   useErrors([{error,isError}])
 
   return (
-    <Dialog open={isNotification} onClose={closeHandler} >
+    <Dialog open={isNotification} onClose={closeHandler} fullWidth maxWidth="xs">
       <Stack
         p={{
-          xs: "1rem",
-          sm: "2rem",
+          xs: "1.25rem",
+          sm: "1.75rem",
         }}
-        maxWidth={"25rem"}
+        spacing={1}
       >
-        <DialogTitle textAlign={"center"}>Notifications</DialogTitle>
+        <DialogTitle sx={{ textAlign: "center", p: 0, fontWeight: 700 }}>
+          Notifications
+        </DialogTitle>
          {
           isLoading ? <Skeleton />: <>
           {data?.allRequests.length > 0 ? (
@@ -77,7 +79,9 @@ const Notifications = () => {
             />
           ))
         ) : (
-          <Typography textAlign={"center"}>0 Notifications</Typography>
+          <Typography textAlign={"center"} color="text.secondary" py={2}>
+            No notifications yet
+          </Typography>
         )}
           </>
          }
@@ -89,7 +93,7 @@ const Notifications = () => {
 const NotificationItem = memo(({ sender, _id, handler }) => {
   const { name, avatar } = sender;
   return (
-    <ListItem>
+    <ListItem disablePadding sx={{ py: 0.75 }}>
       <Stack
         direction={"row"}
         alignItems={"center"}
@@ -98,22 +102,23 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
       >
         <Avatar src={avatar} />
         <Typography
-          variant="body1"
+          variant="body2"
+          fontWeight={500}
           sx={{
             flexGrow: 1,
             display: "-webkit-box",
-            WebkitLineClamp: 1,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
             overflow: "hidden",
             textOverflow: "ellipsis",
             width: "100%",
           }}
         >
-          {name} send you a friend request.
+          <b>{name}</b> sent you a friend request.
         </Typography>
-        <Stack direction={{xs:"column", sm:"row"}}>
-          <Button onClick={()=>handler({_id,accept:true})}>Accept</Button>
-          <Button color="error" onClick={()=>handler({_id,accept:false})}>Reject</Button>
+        <Stack direction={{xs:"column", sm:"row"}} spacing={0.5}>
+          <Button size="small" variant="contained" onClick={()=>handler({_id,accept:true})}>Accept</Button>
+          <Button size="small" color="error" variant="outlined" onClick={()=>handler({_id,accept:false})}>Reject</Button>
         </Stack>
       </Stack>
     </ListItem>
