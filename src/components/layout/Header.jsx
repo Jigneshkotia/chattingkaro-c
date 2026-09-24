@@ -18,6 +18,7 @@ import {
   Logout as LogoutIcon,
   Menu as MenuIcon,
   Notifications,
+  SmartToy as SmartToyIcon,
   Search as SreachIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +38,7 @@ import { resetNotificationCount } from "../../redux/reducers/chat";
 const SearchDialog = lazy(() => import("../Specific/Search"));
 const NotificationDialog = lazy(() => import("../Specific/Notifications"));
 const NewGroupDialog = lazy(() => import("../Specific/NewGroups"));
+const CreateDummyChatDialog = lazy(() => import("../Dialogs/CreateDummyChatDialog"));
 
 const Header = () => {
   const navigate = useNavigate();
@@ -46,6 +48,7 @@ const Header = () => {
     (state) => state.misc
   );
   const { notificationCount } = useSelector((state) => state.chat);
+  const [isDummyDialogOpen, setIsDummyDialogOpen] = useState(false);
 
   const HandleMobile = () => dispatch(setIsMobile(true));
 
@@ -126,6 +129,11 @@ const Header = () => {
                   <AddIcon />
                 </IconButton>
               </Tooltip>
+              <Tooltip title="Create AI Persona">
+                <IconButton color="inherit" size="large" onClick={() => setIsDummyDialogOpen(true)}>
+                  <SmartToyIcon />
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Manage Groups">
                 <IconButton
                   color="inherit"
@@ -168,6 +176,11 @@ const Header = () => {
       {isNewGroup && (
         <Suspense fallback={<Backdrop open />}>
           <NewGroupDialog />
+        </Suspense>
+      )}
+      {isDummyDialogOpen && (
+        <Suspense fallback={<Backdrop open />}>
+          <CreateDummyChatDialog open={isDummyDialogOpen} onClose={() => setIsDummyDialogOpen(false)} />
         </Suspense>
       )}
     </>

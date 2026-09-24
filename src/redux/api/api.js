@@ -154,6 +154,13 @@ const api = createApi({
         }),
         invalidatesTags: ["Chat"],
       }),
+      previewDummyChat: builder.mutation({
+        query: (formData) => ({ url: "chat/dummy/preview", method: "POST", credentials: "include", body: formData }),
+      }),
+      createDummyChat: builder.mutation({
+        query: (formData) => ({ url: "chat/dummy/create", method: "POST", credentials: "include", body: formData }),
+        invalidatesTags: ["Chat"],
+      }),
        
 
   }),
@@ -175,5 +182,7 @@ export const {
    useRenameGroupMutation,
    useRemoveGroupMemberMutation,
    useAddGroupMembersMutation,
-   useDeleteChatMutation
+   useDeleteChatMutation,
+   usePreviewDummyChatMutation,
+   useCreateDummyChatMutation
 } = api;

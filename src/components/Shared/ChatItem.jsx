@@ -15,6 +15,7 @@ const ChatItem = ({
   newMessageAlert,
   index = 0,
   handleDeleteChat,
+  isDummyChat = false,
 }) => {
   return (
     <Link
@@ -49,6 +50,7 @@ const ChatItem = ({
           <Typography noWrap fontWeight={600} title={name}>
             {name}
           </Typography>
+          {isDummyChat && <Chip label="AI Clone" size="small" color="secondary" sx={{ width: "fit-content", height: "1.25rem", fontSize: "0.68rem" }} />}
           {newMessageAlert && (
             <Chip
               label={`${newMessageAlert.count} new`}

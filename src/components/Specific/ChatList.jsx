@@ -23,7 +23,7 @@ const ChatList = ({
         </Typography>
       )}
       {chats?.map((data, index) => {
-        const { avatar, _id, name, groupChat, members } = data;
+        const { avatar, _id, name, groupChat, members, isDummyChat } = data;
         const newMessageAlert = newMessagesAlert.find(
           ({ chatId }) => chatId === _id
         );
@@ -36,6 +36,7 @@ const ChatList = ({
             _id={_id}
             key={_id}
             groupChat={groupChat}
+            isDummyChat={isDummyChat}
             sameSender = {chatId===_id}
             handleDeleteChat={handleDeleteChat}
           />

@@ -1,4 +1,4 @@
-import { IconButton, Skeleton, Stack } from "@mui/material";
+import { Alert, IconButton, Skeleton, Stack } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { grayColor, myBlue, Orange } from "../Constants/Colors";
 import AppLayout from "../components/layout/AppLayout";
@@ -187,6 +187,11 @@ const Chat = ({ chatId, user }) => {
           bgcolor: "#F5F7FB",
         }}
       >
+        {chatDetails.data?.chat?.isDummyChat && (
+          <Alert severity="info" icon={false} sx={{ borderRadius: 2 }}>
+            ✨ AI Persona • {chatDetails.data.chat.dummyPersona?.name || chatDetails.data.chat.name} (trained on a WhatsApp chat)
+          </Alert>
+        )}
         {allMessages.map((i) => (
           <MessageComponent key={i._id} message={i} user={user} />
         ))}
